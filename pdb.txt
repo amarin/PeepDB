@@ -1,0 +1,128 @@
+PDB(4)			  File Formats			   PDB(4)
+
+
+
+NAME
+     PDB (Pilot	Database) file format
+
+SYNOPSIS
+     #define dmDBNameLength    32/* 31 chars + 1 null terminator */
+
+     struct pdb_header {       /* 78 bytes total */
+	  char	 name[ dmDBNameLength ];
+	  DWord	 attributes;
+	  Word	 version;
+	  DWord	 create_time;
+	  DWord	 modify_time;
+	  DWord	 backup_time;
+	  DWord	 modificationNumber;
+	  DWord	 appInfoID;
+	  DWord	 sortInfoID;
+	  char	 type[4];
+	  char	 creator[4];
+	  DWord	 id_seed;
+	  DWord	 nextRecordList;
+	  Word	 numRecords;
+     };
+
+     struct pdb_rec_header {   /* 8 bytes total	*/
+	  DWord	 offset;
+	  struct {
+		 int delete    : 1;
+		 int dirty     : 1;
+		 int busy      : 1;
+		 int secret    : 1;
+		 int category  : 4;
+	  }	 attributes;
+	  char	 uniqueID[3];
+     }
+
+DESCRIPTION
+     The PDB (Pilot Database) file format is used by  all  models
+     of	 the 3Com PalmPilot and	IBM Workpad.  The format consists
+     of	a header followed by a set of record headers followed  by
+     the records themselves.
+
+  Word Sizes
+     In	the synopsis above, the	 types	``Byte,''  ``Word,''  and
+     ``DWord''	are  used just as in the Pilot headers.	 The type
+     ``Byte'' is 8 bits; ``Word'' is 16	 bits;	``DWord''  is  32
+     bits.  The	latter two are in big-endian format.
+
+CAVEATS
+     1.	 The C structures given	in the synopsis	above are  illus-
+	 trative  and  most likely will	not work in actual C code
+	 since compilers align data members on word boundaries.
+
+
+
+
+txt2pdbdoc	  Last change: August 21, 1998			1
+
+
+
+
+
+
+PDB(4)			  File Formats			   PDB(4)
+
+
+
+     2.	 The PDB file format presented here is not  official  and
+	 subject to change.  According to 3Com:
+
+	  At present we	do not document	the .PDB or .PRC  formats
+	  or the Desktop data file (*.dat, *.dba, *.tda) formats.
+	  Some	third-party  developers	 have  experimented  with
+	  deciphering these formats ...
+
+	  Also note that these formats have a very good	chance of
+	  changing in future revisions of the PalmOS and support-
+	  ing  applications,  even  if	they   appear	to   work
+	  presently.
+
+SEE ALSO
+     txt2pdbdoc(1)
+
+     3Com, Inc., Palm Computing	Division.  ``The Data  Manager,''
+     Developing	Palm OS	3.0 Applications, Part 1998.
+
+     3Com, Inc., Palm Computing	Division.  ``How can I	find  out
+     about  the	 *.prc,	 *.pdb,	 *.dat,	*.dba and *.tda	file for-
+     mats?''  Palm Programming FAQs, 1998.
+     http://www.palm.com/devzone/FAQ.html
+
+AUTHOR
+     Paul J. Lucas <pjl@best.com>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+txt2pdbdoc	  Last change: August 21, 1998			2
+
+
